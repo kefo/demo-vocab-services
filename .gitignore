@@ -1,0 +1,6 @@
+.DS_Store
+node_modules
+*.nt
+*.zip
+config-default.js
+

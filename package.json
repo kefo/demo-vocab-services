@@ -1,0 +1,21 @@
+{
+  "name": "vocab-services",
+  "version": "0.0.1",
+  "description": "Basic services to exploit vocabulary data.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kefo/vocab-services.git"
+  },
+  "author": "Kevin Ford <kefo@3windmills.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "~4.13.4",
+    "pug": "^2.0.0-alpha7",
+    "sparql-client-2": "~0.6.0"
+  }
+}

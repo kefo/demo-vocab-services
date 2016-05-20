@@ -1,0 +1,70 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    // The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(rel='icon', href='../../favicon.ico')
+    title Vocab Services - Demo
+    
+    // Latest compiled and minified CSS
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7', crossorigin='anonymous')
+    // Optional theme
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css', integrity='sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r', crossorigin='anonymous')
+    // JQuery
+    script(src='https://code.jquery.com/jquery-1.12.4.min.js', integrity='sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=', crossorigin='anonymous')
+    // Latest compiled and minified JavaScript
+    script(type='text/javascript', src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS', crossorigin='anonymous')
+    // Twitter typeahead
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js')
+
+  body
+    .container
+      .page-header
+        h1 Application
+        p.lead
+          | Helpful tagline.
+      .row
+        .col-md-12
+            #search-field
+                form(role='form')
+                    .form-group
+                        .col-xs-10
+                            input#inputdefault.form-control.typeahead(type='text', placeholder='Enter search term...', name='q', value='')
+                        .col-xs-2
+                            button.btn.btn-default(type='submit') Search
+                        input#labelselected(type='hidden', name='qlabelselected', value='false')
+            #results
+                if showResults
+                    .col-md-12
+                        if qlabelselected == "true"
+                            // Search was for an exact label.  Show "YouMightAlsoSee"
+                            if relateds.length
+                                .col-md-2
+                                    p You might also try:
+                                .col-md-10
+                                    each r in relateds
+                                        a(href="?q=" + r.label + '&qlabelselected=true') #{r.label}
+                                        | &nbsp;&nbsp;&nbsp;
+                        else
+                            // Search was for free text.  Show "Did you mean?"
+                            if relateds.length
+                                .col-md-2
+                                    p Did you mean?
+                                .col-md-10
+                                    each r in relateds
+                                        a(href="?q=" + r.label + '&qlabelselected=true') #{r.label}
+                                        | &nbsp;&nbsp;&nbsp;
+                br 
+                br
+                .col-md-12
+                    h2 Otherwise, results go there
+                        
+            
+    script(type='text/javascript', src='/js/vocab-services.js')
+    link(rel='stylesheet', href='/css/vocab-services.css')
+    // /container
+
