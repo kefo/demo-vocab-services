@@ -3,13 +3,6 @@ var config = require('./config');
 var DidYouMean = require('./services/DidYouMean');
 var YouMightAlsoLike = require('./services/YouMightAlsoLike');
 var Suggestions = require('./services/Suggestions');
-/*
-
-var Doc = require('./models/document');
-
-var ResourceSearch = require('./models/resourcesearch');
-var Resource = require('./models/resource');
-*/
 
 module.exports = function (app) {
     
