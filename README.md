@@ -3,13 +3,16 @@
 Rough, Basic Installation
 
 General idea
-    * Download Blazegraph and initialize
-    * Create Node environment
-    * Clone repo
-    * Install node packages
-    * Fetch and prep source data
-    * Load data
-    * Run
+ * Download Blazegraph and initialize
+ * Create Node environment
+ * Clone repo
+ * Install node packages
+ * Fetch and prep source data
+ * Load data
+ * Run
+
+Download Blazegraph and initialize
+Follow the instructions here: https://www.blazegraph.com/download/
     
 Install environment and activate
 ```bash
