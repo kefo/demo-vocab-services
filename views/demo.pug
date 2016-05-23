@@ -44,7 +44,7 @@ html(lang='en')
                             // Search was for an exact label.  Show "YouMightAlsoSee"
                             if relateds.length
                                 .col-md-2
-                                    p You might also try:
+                                    p Related:
                                 .col-md-10
                                     each r in relateds
                                         a(href="?q=" + r.label + '&qlabelselected=true') #{r.label}
