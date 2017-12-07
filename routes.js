@@ -68,7 +68,7 @@ module.exports = function (app) {
 
     });
     
-    app.get("/demo.html", function(req, res) {
+    app.get("/", function(req, res) {
         
         console.log(req.query);
         var q = req.query.q;
@@ -94,15 +94,15 @@ module.exports = function (app) {
             YouMightAlsoLike.search(q, function(err, response) {
                 console.log(response)
                 pageData.relateds = response.results;
-                res.render('demo', pageData); 
+                res.render('index', pageData);
             });
         } else if (q !== undefined) {
             DidYouMean.search(q, .625, function(err, response) {
                 pageData.relateds = response.results;
-                res.render('demo', pageData); 
+                res.render('index', pageData);
             });
         } else {
-            res.render('demo', pageData);
+            res.render('index', pageData);
         }
 
     });
