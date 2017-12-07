@@ -32,8 +32,10 @@ html(lang='en')
             #search-field
                 form(role='form')
                     .form-group
-                        .col-xs-10
-                            input#inputdefault.form-control.typeahead(type='text', placeholder='Enter search term...', name='q', value='')
+                        .col-xs-8
+                            input#inputdefault.form-control.typeahead(type='text', placeholder='Enter name...', name='q', value='')
+                        .col-xs-2
+                            input#inputyear.form-control.input(type='text', placeholder='Enter birth year...', name='y', value='')
                         .col-xs-2
                             button.btn.btn-default(type='submit') Search
                         input#labelselected(type='hidden', name='qlabelselected', value='false')
