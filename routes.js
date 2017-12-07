@@ -49,6 +49,7 @@ module.exports = function (app) {
         
         console.log(req.query);
         var q = req.query.q;
+        var y = req.query.y;
         var minScore = req.query.minScore;
         var serialization = "json"
 
@@ -60,7 +61,7 @@ module.exports = function (app) {
             serialization = "json";
         }
         
-        Suggestions.search(q, minScore, function(err, response) {
+        Suggestions.search(q, y, minScore, function(err, response) {
             res.type('application/json');
             res.send(response);  
         });
