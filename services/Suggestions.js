@@ -3,9 +3,10 @@ var SparqlClient = require('sparql-client-2');
 
 var suggestions = {};
 
-suggestions.search = function(q, y, minScore, cb) {
+suggestions.search = function(q, by, dy, minScore, cb) {
     console.log('q: ', q);
-    console.log('y: ', y);
+    console.log('by: ', by);
+    console.log('dy: ', dy);
     console.log('minScore: ', minScore);
 
     sparqlEndpoint = 'http://' + config.endpoint.host + ':' + config.endpoint.port + config.endpoint.path;
@@ -28,6 +29,10 @@ suggestions.search = function(q, y, minScore, cb) {
 	?uri foaf:focus ?agent .
 	?agent getty:biographyPreferred ?bio .
 	?bio getty:estStart "1882"^^xsd:gYear .
+
+	?uri foaf:focus ?agent .
+	?agent getty:biographyPreferred ?bio .
+	?bio getty:estEnd "1967"^^xsd:gYear .
 
 	?label bds:relevance ?score .
 	?label bds:rank ?rank .
@@ -52,10 +57,15 @@ suggestions.search = function(q, y, minScore, cb) {
 	" ?label bds:minRelevance ?minScore . " +
 	" ?label bds:matchAllTerms 'true' . ";
 
-    if (y != null) {
+    if (by != null) {
 	query += " ?uri foaf:focus ?agent . " +
 	    " ?agent getty:biographyPreferred ?bio . " +
 	    " ?bio getty:estStart ?birthYear^^xsd:gYear . ";
+    }
+    if (dy != null) {
+	query += " ?uri foaf:focus ?agent . " +
+	    " ?agent getty:biographyPreferred ?bio . " +
+	    " ?bio getty:estEnd ?deathYear^^xsd:gYear . ";
     }
 
     query += " ?label bds:relevance ?score . " +
@@ -79,8 +89,11 @@ suggestions.search = function(q, y, minScore, cb) {
 	query: {value: q + '*', type: 'string'},
 	minScore: {value: minScore, type: 'decimal'}
     };
-    if (y != null) {
-	binds.birthYear = y;
+    if (by != null) {
+	binds.birthYear = by;
+    }
+    if (dy != null) {
+	binds.deathYear = dy;
     }
 
     client.query(query)
@@ -104,7 +117,8 @@ suggestions.search = function(q, y, minScore, cb) {
 	    var response = {
 		"service": "suggestions",
 		"q": q,
-		"y": y,
+		"by": by,
+		"dy": dy,
 		"results": results
 	    }
 	    cb(null, response);

@@ -32,10 +32,12 @@ html(lang='en')
             #search-field
                 form(role='form')
                     .form-group
-                        .col-xs-8
+                        .col-xs-6
                             input#inputdefault.form-control.typeahead(type='text', placeholder='Enter name...', name='q', value='')
                         .col-xs-2
-                            input#inputyear.form-control.input(type='text', placeholder='Enter birth year...', name='y', value='')
+                            input#inputbirthyear.form-control.input(type='text', placeholder='Enter birth year...', name='by', value='')
+                        .col-xs-2
+                            input#inputdeathyear.form-control.input(type='text', placeholder='Enter death year...', name='dy', value='')
                         .col-xs-2
                             button.btn.btn-default(type='submit') Search
                         input#labelselected(type='hidden', name='qlabelselected', value='false')
