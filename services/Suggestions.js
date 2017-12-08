@@ -14,16 +14,16 @@ suggestions.search = function(q, y, minScore, cb) {
     /* Sample SPARQL query:
     PREFIX bds: <http://www.bigdata.com/rdf/search#>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-	PREFIX getty: <http://vocab.getty.edu/ontology#>
-	PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-	PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX getty: <http://vocab.getty.edu/ontology#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-	SELECT ?prefLabel ?altLabel ?score
+    SELECT ?prefLabel ?sc ?uri
     WHERE {
 	?uri skos:prefLabel|skos:altLabel ?label .
 	?label bds:search 'Hopper, Edward'^^<string> .
 	?label bds:minRelevance .625 .
-	?label bds:matchAllTerms "true" .
+	?label bds:matchAllTerms 'true' .
 
 	?uri foaf:focus ?agent .
 	?agent getty:biographyPreferred ?bio .
@@ -36,7 +36,7 @@ suggestions.search = function(q, y, minScore, cb) {
 	FILTER(LANG(?prefLabel) = "" || LANGMATCHES(LANG(?prefLabel), "en")) .
 	BIND ( IF(?prefLabel != ?label, ?label, '') AS ?altLabel ) .
     }
-    ORDER BY DESC (?score)
+    ORDER BY DESC (?sc)
     LIMIT 10
     */
     var query = "PREFIX bds: <http://www.bigdata.com/rdf/search#> " +
@@ -45,14 +45,14 @@ suggestions.search = function(q, y, minScore, cb) {
 	"PREFIX foaf: <http://xmlns.com/foaf/0.1/> " +
 	"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> " +
 
-	"SELECT ?prefLabel ?altLabel ?score ?uri " +
+	"SELECT ?prefLabel ?sc ?uri " +
 	"WHERE { " +
 	" ?uri skos:prefLabel|skos:altLabel ?label . " +
 	" ?label bds:search ?query . " +
 	" ?label bds:minRelevance ?minScore . " +
 	" ?label bds:matchAllTerms 'true' . ";
 
-    if (y) {
+    if (y != null) {
 	query += " ?uri foaf:focus ?agent . " +
 	    " ?agent getty:biographyPreferred ?bio . " +
 	    " ?bio getty:estStart ?birthYear^^xsd:gYear . ";
@@ -60,12 +60,12 @@ suggestions.search = function(q, y, minScore, cb) {
 
     query += " ?label bds:relevance ?score . " +
 	" ?label bds:rank ?rank . " +
-	" BIND ( IF (?score = 1.0, 10000, ?score * ?rank) AS ?score) " +
+	" BIND ( IF (?score = 1.0, 10000, ?score * ?rank) AS ?sc) " +
 	" ?uri skos:prefLabel ?prefLabel . " +
 	" FILTER(LANG(?prefLabel) = '' || LANGMATCHES(LANG(?prefLabel), 'en')) . " +
 	" BIND ( IF(?prefLabel != ?label, ?label, '') AS ?altLabel ) . " +
 	"} " +
-	"ORDER BY DESC (?score) " +
+	"ORDER BY DESC (?sc) " +
 	"LIMIT 10";
 
     var client =
@@ -79,7 +79,7 @@ suggestions.search = function(q, y, minScore, cb) {
 	query: {value: q + '*', type: 'string'},
 	minScore: {value: minScore, type: 'decimal'}
     };
-    if (y) {
+    if (y != null) {
 	binds.birthYear = y;
     }
 
@@ -96,8 +96,7 @@ suggestions.search = function(q, y, minScore, cb) {
 		console.log(b);
 		var result = {
 		    "prefLabel": b.prefLabel.value,
-		    "altLabel": b.altLabel.value,
-		    "score": b.score.value,
+		    "score": b.sc.value,
 		    "uri": b.uri
 		}
 		results.push(result);
