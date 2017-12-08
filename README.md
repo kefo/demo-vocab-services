@@ -37,7 +37,8 @@ curl http://vocab.getty.edu/dataset/ulan/full.zip > ulan.zip
 
 You can try
 ```bash
-unzip ulan.zip
+mkdir ulan
+unzip ulan.zip -d ulan/
 ```
 but on a MAC I had to unpack it with the Archive Utility.
 
@@ -45,7 +46,7 @@ but on a MAC I had to unpack it with the Archive Utility.
 cd ..
 cd initialize
 ./extract-ulan-triples.sh
-./load-gb.sh
+./load-bg.sh
 cd ..
 ```
 
