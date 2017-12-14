@@ -10,6 +10,8 @@ module.exports = function (app) {
         
         console.log(req.query);
         var q = req.query.q;
+        var by = req.query.by;
+        var dy = req.query.dy;
         var minScore = req.query.minScore;
         var serialization = "json"
 
@@ -21,7 +23,7 @@ module.exports = function (app) {
             serialization = "json";
         }
         
-        DidYouMean.search(q, minScore, function(err, response) {
+        DidYouMean.search(q, by, dy, minScore, function(err, response) {
             res.type('application/json');
             res.send(response);  
         });

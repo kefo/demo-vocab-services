@@ -76,5 +76,5 @@ There are a few entry points in the interface:
 
 * / - The home page will show a demo form you can use to tinker with the service endpoints
 * /suggestions - An autosuggest endpoint. You can pass any part of a name along with optional birth and death dates to get a list of matches back.
-* /didyoumean - 
+* /didyoumean - Searches for exact matches among preferred names and alternate names. You can pass a full name along with optional birth and death dates to get a list of matches back.
 * /youmightalsolike - 
