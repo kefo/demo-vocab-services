@@ -31,7 +31,7 @@ com.bigdata.rdf.store.DataLoader.queueCapacity=10
 #Namespace to load
 namespace=ulan
 #Files to load
-fileOrDirs=$DIR/../source-data/ulan/ULAN_AltLabels.nt,$DIR/../source-data/ulan/ULAN_BioPreferred.nt,$DIR/../source-data/ulan/ULAN_BirthDate.nt,$DIR/../source-data/ulan/ULAN_DeathDate.nt,$DIR/../source-data/ulan/ULAN_Focus.nt,$DIR/../source-data/ulan/ULAN_PrefLabels.nt,$DIR/../source-data/ulan/ULAN_Related.nt
+fileOrDirs=$DIR/../source-data/ulan/ULAN_AltLabels.nt,$DIR/../source-data/ulan/ULAN_BioPreferred.nt,$DIR/../source-data/ulan/ULAN_BirthDate.nt,$DIR/../source-data/ulan/ULAN_DeathDate.nt,$DIR/../source-data/ulan/ULAN_Focus.nt,$DIR/../source-data/ulan/ULAN_PrefLabels.nt,$DIR/../source-data/ulan/ULAN_Related.nt,$DIR/../source-data/ulan/ULAN_LOCIDs.nt
 #Property file (if creating a new namespace)
 propertyFile=$NSS_DATALOAD_PROPERTIES
 EOT
