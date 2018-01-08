@@ -19,7 +19,7 @@ suggestions.search = function(q, by, dy, minScore, cb) {
     PREFIX foaf: <http://xmlns.com/foaf/0.1/>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-    SELECT ?prefLabel ?sc ?uri
+    SELECT ?prefLabel ?sc ?uri ?locUri
     WHERE {
 	?uri skos:prefLabel|skos:altLabel ?label .
 	?label bds:search 'Hopper, Edward'^^<string> .
@@ -37,6 +37,8 @@ suggestions.search = function(q, by, dy, minScore, cb) {
 	?label bds:relevance ?score .
 	?label bds:rank ?rank .
 	BIND ( IF (?score = 1.0, 10000, ?score * ?rank) AS ?sc)
+	?uri skos:exactMatch ?locUri .
+	FILTER(str(?locUri) = "" || regex(str(?locUri), "^http://id.loc.gov") ) .
 	?uri skos:prefLabel ?prefLabel .
 	FILTER(LANG(?prefLabel) = "" || LANGMATCHES(LANG(?prefLabel), "en")) .
 	BIND ( IF(?prefLabel != ?label, ?label, '') AS ?altLabel ) .
@@ -50,7 +52,7 @@ suggestions.search = function(q, by, dy, minScore, cb) {
 	"PREFIX foaf: <http://xmlns.com/foaf/0.1/> " +
 	"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> " +
 
-	"SELECT ?prefLabel ?sc ?uri " +
+	"SELECT ?prefLabel ?sc ?uri ?locUri " +
 	"WHERE { " +
 	" ?uri skos:prefLabel|skos:altLabel ?label . " +
 	" ?label bds:search ?query . " +
@@ -71,6 +73,8 @@ suggestions.search = function(q, by, dy, minScore, cb) {
     query += " ?label bds:relevance ?score . " +
 	" ?label bds:rank ?rank . " +
 	" BIND ( IF (?score = 1.0, 10000, ?score * ?rank) AS ?sc) " +
+	" ?uri skos:exactMatch ?locUri . " +
+	" FILTER(str(?locUri) = '' || regex(str(?locUri), '^http://id.loc.gov') ) . " +
 	" ?uri skos:prefLabel ?prefLabel . " +
 	" FILTER(LANG(?prefLabel) = '' || LANGMATCHES(LANG(?prefLabel), 'en')) . " +
 	" BIND ( IF(?prefLabel != ?label, ?label, '') AS ?altLabel ) . " +
@@ -110,7 +114,8 @@ suggestions.search = function(q, by, dy, minScore, cb) {
 		var result = {
 		    "prefLabel": b.prefLabel.value,
 		    "score": b.sc.value,
-		    "uri": b.uri
+		    "uri": b.uri,
+		    "locUri": b.locUri
 		}
 		results.push(result);
 	    }
