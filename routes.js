@@ -10,6 +10,8 @@ module.exports = function (app) {
         
         console.log(req.query);
         var q = req.query.q;
+        var by = req.query.by;
+        var dy = req.query.dy;
         var minScore = req.query.minScore;
         var serialization = "json"
 
@@ -21,7 +23,7 @@ module.exports = function (app) {
             serialization = "json";
         }
         
-        DidYouMean.search(q, minScore, function(err, response) {
+        DidYouMean.search(q, by, dy, minScore, function(err, response) {
             res.type('application/json');
             res.send(response);  
         });
@@ -49,6 +51,8 @@ module.exports = function (app) {
         
         console.log(req.query);
         var q = req.query.q;
+        var by = req.query.by;
+        var dy = req.query.dy;
         var minScore = req.query.minScore;
         var serialization = "json"
 
@@ -60,14 +64,14 @@ module.exports = function (app) {
             serialization = "json";
         }
         
-        Suggestions.search(q, minScore, function(err, response) {
+        Suggestions.search(q, by, dy, minScore, function(err, response) {
             res.type('application/json');
             res.send(response);  
         });
 
     });
     
-    app.get("/demo.html", function(req, res) {
+    app.get("/", function(req, res) {
         
         console.log(req.query);
         var q = req.query.q;
@@ -93,15 +97,15 @@ module.exports = function (app) {
             YouMightAlsoLike.search(q, function(err, response) {
                 console.log(response)
                 pageData.relateds = response.results;
-                res.render('demo', pageData); 
+                res.render('index', pageData);
             });
         } else if (q !== undefined) {
             DidYouMean.search(q, .625, function(err, response) {
                 pageData.relateds = response.results;
-                res.render('demo', pageData); 
+                res.render('index', pageData);
             });
         } else {
-            res.render('demo', pageData);
+            res.render('index', pageData);
         }
 
     });

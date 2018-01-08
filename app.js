@@ -1,5 +1,5 @@
 // dependencies
-var config = require('./config');
+var config = require(__dirname + '/config');
 
 var express = require('express');
 
@@ -10,7 +10,7 @@ app.set('port', process.env.PORT || config.app.port || 7000);
 app.use(express.static('public'));
 
 app.set('view engine', 'pug');
-app.set('views', './views')
+app.set('views', __dirname + '/views')
 
 // routes
 require('./routes')(app);
